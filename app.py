@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 
 app = FastAPI()
 
@@ -8,6 +10,7 @@ origins = [
     "https://localhost.tiangolo.com",
     "http://localhost",
     "http://localhost:8080",
+    "http://localhost:3000",
 ]
 
 app.add_middleware(
@@ -23,9 +26,7 @@ app.add_middleware(
 def read_root():
     return {"Hello": "World"}
 
-# Crear una ruta para recibir un entrada de texto y devolver si el zipcode ingresado es valido o no
-
 
 @app.get("/zipcode/{zipcode}")
-def read_zipcode(zipcode: str):
+async def read_zipcode(zipcode: str):
     return {"zipcode": zipcode}
