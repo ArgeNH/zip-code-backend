@@ -3,6 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 
+from routes import zipcodes
+
+# create FastAPI instance
 app = FastAPI()
 
 origins = [
@@ -13,6 +16,7 @@ origins = [
     "http://localhost:3000",
 ]
 
+# middleware to allow CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -21,12 +25,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# routes
+app.include_router(zipcodes.router)
+
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/zipcode/{zipcode}")
-async def read_zipcode(zipcode: str):
-    return {"zipcode": zipcode}
+    return {"message": "Bienvenido al API de Zipcodes"}
