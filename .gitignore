@@ -24,3 +24,4 @@ archive.zip
 *~
 .*.sw?
 .env
+.DS_Store
