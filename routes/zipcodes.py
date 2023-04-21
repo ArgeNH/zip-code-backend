@@ -32,11 +32,9 @@ async def read_zipcode(zipcode: str, request: Request):
     # Si no esta, hacer la peticion a la API y guardar el objeto en la db
 
     try:
-        location_array = dbZip.locations.find(
-            {"postal_code": zipcode}, {"_id": 0})
-        # print(list(location_array))
+        location_array = list(dbZip.locations.find({"postal_code": zipcode}))
 
-        if (len(list(location_array.clone())) > 0):
+        if (len(location_array) > 0):
             print("Ya existe")
         else:
             headers = {
@@ -52,18 +50,21 @@ async def read_zipcode(zipcode: str, request: Request):
 
             zipcodes_array = data["results"][f"{zipcode}"]
 
+            location_added = []
+
             if isinstance(zipcodes_array, list):
-                for zipcode in zipcodes_array:
-                    country = get_country_name(zipcode["country_code"])
-                    zipcode["country_code"] = country
-                    zipcode["_id"] = str(uuid.uuid4())
+                for zip in zipcodes_array:
+                    country = get_country_name(zip["country_code"])
+                    zip["country_code"] = country
+                    zip["_id"] = str(uuid.uuid4())
+                    location_added.append(zip)
 
                 dbZip.locations.insert_many(zipcodes_array)
 
-                return {"zipcode": zipcode}
+                return {"zipcode": list(location_added)}
             else:
                 print("Error: el resultado de la API no es una lista.")
 
-        return {"zipcode": list(location_array.clone())}
+        return {"zipcode": location_array}
     except TypeError as e:
         print(e.args)
