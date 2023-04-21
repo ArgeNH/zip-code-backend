@@ -5,10 +5,12 @@ class Location(BaseModel):
     id: str = Field(..., alias="_id")
     city: str = Field(...)
     state: str = Field(...)
-    country: str = Field(...)
-    postal: str = Field(...)
+    state_code: str = Field(...)
+    country_code: str = Field(...)
+    postal_code: str = Field(...)
     latitude: str = Field(...)
     longitude: str = Field(...)
+    province_code: str = Field(...)
 
     class Config:
         allow_population_by_field_name = True
@@ -17,9 +19,11 @@ class Location(BaseModel):
                 "_id": "5f4e7d4b0a4e7b8e1b1c9a9d",
                 "city": "San Francisco",
                 "state": "California",
-                "country": "United States",
-                "postal": "94102",
+                "state_code": "CA",
+                "country_code": "United States",
+                "postal_code": "94102",
                 "latitude": "37.781",
-                "longitude": "-122.411"
+                "longitude": "-122.411",
+                "province_code": "CA"
             }
         }
