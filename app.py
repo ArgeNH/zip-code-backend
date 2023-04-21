@@ -1,9 +1,11 @@
+from routes import zipcodes
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 
-from routes import zipcodes
+from config import db
+
 
 # create FastAPI instance
 app = FastAPI()
@@ -27,6 +29,20 @@ app.add_middleware(
 
 # routes
 app.include_router(zipcodes.router)
+
+
+@app.on_event("startup")
+def startup_db_client():
+    try:
+        db.conn.admin.command('ping')
+        print("Pinged your deployment. You successfully connected to MongoDB!")
+    except Exception as e:
+        print(e)
+
+
+@app.on_event("shutdown")
+def shutdown_db_client():
+    db.conn.close()
 
 
 @app.get("/")
