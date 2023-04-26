@@ -61,10 +61,18 @@ async def read_zipcode(zipcode: str, request: Request):
 
                 dbZip.locations.insert_many(zipcodes_array)
 
-                return {"zipcode": list(location_added)}
+                return {
+                    "message": "Código postal encontrado.",
+                    "status": "200",
+                    "zipcode": list(location_added)
+                }
             else:
                 print("Error: el resultado de la API no es una lista.")
 
-        return {"zipcode": location_array}
+        return {
+            "message": "Código postal encontrado.",
+            "status": "200",
+            "zipcode": location_array
+        }
     except TypeError as e:
         print(e.args)
