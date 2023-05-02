@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Response, status
+from fastapi import APIRouter, Request, Response, status, Path
 from requests import get
 from json import loads
 from dotenv import dotenv_values
@@ -7,6 +7,9 @@ import uuid
 # from models import location
 from config import db
 from codes import get_country_name
+
+# import fuction is_valid_postal_code from isValidZipcode.py
+from .isValidZipcode import is_valid_postal_code
 
 # Location = location.Location
 dbZip = db.dbZip
@@ -20,16 +23,25 @@ router = APIRouter(
 
 
 @router.get("/{zipcode}")
-async def read_zipcode(zipcode: str, request: Request):
+async def read_zipcode(zipcode: str = Path(..., min_length=1), request: Request = None):
+
+    """ if len(request.path_params["zipcode"]) == 0:
+        return {"error": "Debe ingresar un código postal"} """
 
     if len(zipcode) == 0:
         return {"error": "Debe ingresar un código postal"}
 
     # Analisis estructural del codigo postal
 
+    code = is_valid_postal_code(zipcode)
+
+    print(code)
+
     # Comprobar si esta en la db
     # Si esta, retornar el objeto
     # Si no esta, hacer la peticion a la API y guardar el objeto en la db
+
+    # spaCy
 
     try:
         location_array = list(dbZip.locations.find({"postal_code": zipcode}))
@@ -55,7 +67,7 @@ async def read_zipcode(zipcode: str, request: Request):
             if isinstance(zipcodes_array, list):
                 for zip in zipcodes_array:
                     country = get_country_name(zip["country_code"])
-                    zip["country_code"] = country
+                    zip["country_name"] = country
                     zip["_id"] = str(uuid.uuid4())
                     location_added.append(zip)
 
