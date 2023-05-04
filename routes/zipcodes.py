@@ -35,13 +35,14 @@ async def read_zipcode(zipcode: str = Path(..., min_length=1), request: Request 
 
     code = is_valid_postal_code(zipcode)
 
-    print(code)
-
-    # Comprobar si esta en la db
-    # Si esta, retornar el objeto
-    # Si no esta, hacer la peticion a la API y guardar el objeto en la db
-
-    # spaCy
+    if code["valid"] == False:
+        return {
+            "message": "El código postal no es válido",
+            "valid": False,
+            "status": 404,
+            zipcode: [],
+            "code": code
+        }
 
     try:
         location_array = list(dbZip.locations.find({"postal_code": zipcode}))
@@ -75,16 +76,26 @@ async def read_zipcode(zipcode: str = Path(..., min_length=1), request: Request 
 
                 return {
                     "message": "Código postal encontrado.",
-                    "status": "200",
-                    "zipcode": list(location_added)
+                    "status": 200,
+                    "valid": True,
+                    "zipcode": list(location_added),
+                    "code": code
                 }
             else:
-                print("Error: el resultado de la API no es una lista.")
+                return {
+                    "message": "Código postal no encontrado. No es una lista",
+                    "status": "404",
+                    "valid": False,
+                    "zipcode": [],
+                    "code": code
+                }
 
         return {
             "message": "Código postal encontrado.",
-            "status": "200",
-            "zipcode": location_array
+            "status": 200,
+            "valid": True,
+            "zipcode": location_array,
+            "code": code
         }
     except TypeError as e:
         print(e.args)

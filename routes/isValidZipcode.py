@@ -1,5 +1,6 @@
 import spacy
 from spacy.matcher import Matcher
+from .countries import countries_dict
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -7,6 +8,9 @@ nlp = spacy.load("en_core_web_sm")
 def is_valid_postal_code(zipcode: str):
 
     matcher = Matcher(nlp.vocab)
+
+    digit, letter, alpha = contar_caracteres(zipcode)
+    print("Tiene {} letras, {} digitos y {} caracteres.".format(letter, digit, alpha))
 
     patterns = {
         # Codigo postal de ESTADOS UNIDOS
@@ -17,9 +21,12 @@ def is_valid_postal_code(zipcode: str):
             {"IS_SPACE": True, "OP": "?"},
             {"SHAPE": "dXd"},
         ],
-        "ZIPCODE_AU": [{"SHAPE": "dddd"}],  # Codigo postal de AUSTRALIA
-        "ZIPCODE_CO": [{"SHAPE": "dddddd"}],  # Codigo postal de COLOMBIA
-        "ZIPCODE_ES": [{"SHAPE": "ddddd"}],  # Codigo postal de ESPAÑA
+        # Codigo postal de COLOMBIA, Belarus,
+        "ZIPCODE_CO": [{"SHAPE": "dddddd"}],
+        # Codigo postal de AUSTRALIA, AFGANISTAN, Albania, Armenia, Argentina, Austria, Bangladesh, Belgica
+        "ZIPCODE_AU": [{"SHAPE": "dddd"}],
+        # Codigo postal de ESPAÑA, Aland Islands, Algeria, Bhutan
+        "ZIPCODE_ES": [{"SHAPE": "ddddd"}],
         "ZIPCODE_GR": [
             {"SHAPE": "ddd"},
             {"IS_SPACE": True, "OP": "?"},
@@ -35,9 +42,25 @@ def is_valid_postal_code(zipcode: str):
             {"IS_SPACE": True, "OP": "?"},
             {"SHAPE": "dXX"}
         ],
-        "ZIPCODE_IRLANDA": [
-            {"SHAPE": "Xdd"},
-        ],
+        "ZIPCODE_IRLANDA": [{"SHAPE": "Xdd"}],  # Codigo postal de IRLANDA
+        "ZIPCODE_AD": [{"SHAPE": "XXddd"}],  # Codigo postal de ANDORRA
+        "ZIPCODE_AZ": [{"SHAPE": "XXdddd"}],  # Codigo postal de Azerbaijan
+        # Codigo postal de ANGUILA
+        "ZIPCODE_AI": [{"SHAPE": "XX-dddd"}],
+        # Codigo postal de Argentina
+        "ZIPCODE_AR_ONE": [{"SHAPE": "XddddXXX"}],
+        "ZIPCODE_AR_TWO": [{"SHAPE": "Xdddd"}],  # Codigo postal de Argentina
+        "ZIPCODE_BB": [{"SHAPE": "XXddddd"}],  # Codigo postal de Barbados
+        "ZIPCODE_BM_ONE": [
+            {"SHAPE": "XX"},
+            {"IS_SPACE": True, "OP": "?"},
+            {"SHAPE": "dd"}
+        ],  # Codigo postal de Bermuda
+        "ZIPCODE_BM_TWO": [
+            {"SHAPE": "XX"},
+            {"IS_SPACE": True, "OP": "?"},
+            {"SHAPE": "XX"}
+        ],  # Codigo postal de Bermuda
     }
 
     for name, pattern in patterns.items():
@@ -49,17 +72,39 @@ def is_valid_postal_code(zipcode: str):
 
     matches = matcher(doc)
 
+    country_possible = []
     for match_id, start, end in matches:
         codigo_postal = doc[start:end]
         match_name = nlp.vocab.strings[match_id]
+        country_possible.append(match_name)
         print(f"{match_name}: {codigo_postal.text}")
 
-    print(matches)
+    print(country_possible)
 
     if len(matches) == 0:
-        return {"message": "El código postal no es válido", "valid": False}
+        return {
+            "message": "El código postal no es válido",
+            "valid": False,
+            "countries": country_possible,
+            "data": {
+                "letters": letter,
+                "digits": digit,
+                "characters": alpha,
+                "pattern": countries_dict.get((digit, letter, alpha), [])
+            }
+        }
 
-    return {"message": "Código postal válido", "valid": True}
+    return {
+        "message": "Código postal válido",
+        "valid": True,
+        "countries": country_possible,
+        "data": {
+            "letters": letter,
+            "digits": digit,
+            "characters": alpha,
+            "pattern": countries_dict.get((digit, letter, alpha), [])
+        }
+    }
 
 
 def verificar_codigo_postal(texto, patterns):
@@ -93,3 +138,17 @@ def verificar_codigo_postal(texto, patterns):
 
     print("No se encontró ningún patrón coincidente.")
     return False
+
+
+def contar_caracteres(texto):
+    letras = 0
+    digitos = 0
+    caracteres = 0
+    for caracter in texto:
+        if caracter.isalpha():
+            letras += 1
+        elif caracter.isdigit():
+            digitos += 1
+        else:
+            caracteres += 1
+    return digitos, letras, caracteres

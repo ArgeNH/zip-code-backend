@@ -137,6 +137,7 @@ codes = {
     'MD': 'Moldova, Republic of',
     'MG': 'Madagascar',
     'MH': 'Marshall Islands',
+    'MK': 'Macedonia',
     'ML': 'Mali',
     'MN': 'Mongolia',
     'MM': 'Myanmar',
