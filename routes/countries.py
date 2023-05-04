@@ -1,8 +1,17 @@
 countries_dict = {
     (3, 3, 1): ["Canada"],
     (6, 0, 0): ["Colombia", "Belarus"],
-    (4, 0, 0): ["Australia", "Afganistan", "Albania", "Armenia", "Argentina", "Austria", "Bangladesh", "Belgica"],
-    (5, 0, 0): ["España", "Aland Islands", "Algeria", "Bhutan"],
+    (4, 0, 0): [
+        "Australia", "Afganistan",
+        "Albania", "Armenia",
+        "Argentina", "Austria",
+        "Bangladesh", "Belgica",
+        "Bolivia"
+    ],
+    (5, 0, 0): [
+        "España", "Aland Islands",
+        "Algeria", "Bhutan"
+    ],
     (5, 0, 1): ["Grecia"],
     (2, 4, 1): ["Reino Unido"],
     (3, 4, 1): ["Reino Unido"],

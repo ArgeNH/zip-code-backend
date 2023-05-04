@@ -61,6 +61,7 @@ def is_valid_postal_code(zipcode: str):
             {"IS_SPACE": True, "OP": "?"},
             {"SHAPE": "XX"}
         ],  # Codigo postal de Bermuda
+
     }
 
     for name, pattern in patterns.items():
