@@ -61,6 +61,15 @@ async def read_zipcode(zipcode: str = Path(..., min_length=1), request: Request 
                 'https://app.zipcodebase.com/api/v1/search', headers=headers, params=params)
             data = response.json()
 
+            if data["results"] == []:
+                return {
+                    "message": "Código postal no encontrado",
+                    "status": "404",
+                    "valid": False,
+                    "zipcode": [],
+                    "code": code
+                }
+
             zipcodes_array = data["results"][f"{zipcode}"]
 
             location_added = []
@@ -104,5 +113,5 @@ async def read_zipcode(zipcode: str = Path(..., min_length=1), request: Request 
             "status": 500,
             "valid": False,
             "zipcode": [],
-            "code": {}
+            "code": code
         }

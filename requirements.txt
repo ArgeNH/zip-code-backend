@@ -2,5 +2,5 @@ fastapi
 uvicorn
 pymongo
 spacy
-dotenv
+python-dotenv
 requests

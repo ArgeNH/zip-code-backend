@@ -1,5 +1,6 @@
 import spacy
-from spacy.matcher import Matcher
+import re
+from spacy.matcher import Matcher, PhraseMatcher
 from .countries import countries_dict
 
 nlp = spacy.load("en_core_web_sm")
@@ -10,7 +11,7 @@ def is_valid_postal_code(zipcode: str):
     matcher = Matcher(nlp.vocab)
 
     digit, letter, alpha = contar_caracteres(zipcode)
-    print("Tiene {} letras, {} digitos y {} caracteres.".format(letter, digit, alpha))
+    print("Tiene {} digitos, {} letras y {} caracteres.".format(digit, letter, alpha))
 
     patterns = {
         # Codigo postal de ESTADOS UNIDOS
@@ -23,9 +24,10 @@ def is_valid_postal_code(zipcode: str):
         ],
         # Codigo postal de COLOMBIA, Belarus,
         "ZIPCODE_CO": [{"SHAPE": "dddddd"}],
-        # Codigo postal de AUSTRALIA, AFGANISTAN, Albania, Armenia, Argentina, Austria, Bangladesh, Belgica
-        "ZIPCODE_AU": [{"SHAPE": "dddd"}],
-        # Codigo postal de ESPAÑA, Aland Islands, Algeria, Bhutan
+        # Codigo postal de AUSTRALIA, AFGANISTAN,
+        # Albania, Armenia, Argentina, Austria,
+        #  Bangladesh, Belgica, Bulgaria, Cabo Verde
+        # Codigo postal de ESPAÑA, Aland Islands, Algeria, Bhutan, Cambodia
         "ZIPCODE_ES": [{"SHAPE": "ddddd"}],
         "ZIPCODE_GR": [
             {"SHAPE": "ddd"},
@@ -44,7 +46,8 @@ def is_valid_postal_code(zipcode: str):
         ],
         "ZIPCODE_IRLANDA": [{"SHAPE": "Xdd"}],  # Codigo postal de IRLANDA
         "ZIPCODE_AD": [{"SHAPE": "XXddd"}],  # Codigo postal de ANDORRA
-        "ZIPCODE_AZ": [{"SHAPE": "XXdddd"}],  # Codigo postal de Azerbaijan
+        # Codigo postal de Azerbaijan, Islas Virgenes Britanicas, Brunei
+        "ZIPCODE_AZ": [{"SHAPE": "XXdddd"}],
         # Codigo postal de ANGUILA
         "ZIPCODE_AI": [{"SHAPE": "XX-dddd"}],
         # Codigo postal de Argentina
@@ -67,6 +70,22 @@ def is_valid_postal_code(zipcode: str):
             {"IS_SPACE": True, "OP": "?"},
             {"SHAPE": "XX"}
         ],  # British Indian Ocean Territory
+        "ZIPCODE_KY": [{"SHAPE": "XXd-dddd"}],  # Islas Caiman
+        "ZIPCODE_AU": [{"SHAPE": "dddd"}],
+        "ZIPCODE_CL": [{"SHAPE": "ddddddd"}],  # Chile
+        "ZIPCODE_FK": [
+            {"SHAPE": "XXXX"},
+            {"IS_SPACE": True, "OP": "?"},
+            {"SHAPE": "dXX"}
+        ],  # Islas Malvinas
+        "ZIPCODE_FO": [{"SHAPE": "ddd"}],  # Islas Feroe
+        "ZIPCODE_GF": [{"SHAPE": "973dd"}],  # Guyana Francesa
+        "ZIPCODE_GFP": [{"SHAPE": "987dd"}],  # Polinesia Frances
+        "ZIPCODE_GP": [{"SHAPE": "971dd"}],  # Guadalope
+        "ZIPCODE_DE": [{"SHAPE": "dd"}],  # Alemania 1
+        "ZIPCODE_JM": [{"SHAPE": "XXXXdd"}],  # Jamaica
+        "ZIPCODE_JP": [{"SHAPE": "ddd-dddd"}],  # Jamaica
+
     }
 
     for name, pattern in patterns.items():
