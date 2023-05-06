@@ -94,8 +94,15 @@ async def read_zipcode(zipcode: str = Path(..., min_length=1), request: Request 
             "message": "Código postal encontrado.",
             "status": 200,
             "valid": True,
-            "zipcode": location_array,
+            "zipcode": list(location_array),
             "code": code
         }
     except TypeError as e:
         print(e.args)
+        return {
+            "message": f"Error {e.args}",
+            "status": 500,
+            "valid": False,
+            "zipcode": [],
+            "code": {}
+        }

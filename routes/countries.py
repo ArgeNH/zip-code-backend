@@ -24,4 +24,6 @@ countries_dict = {
     (5, 2, 0): ["Barbados"],
     (2, 2, 1): ["Bermuda"],
     (0, 4, 1): ["Bermuda"],
+    (8, 0, 2): ["Brazil"],
+    (1, 5, 1): ["British Indian Ocean Territory"]
 }

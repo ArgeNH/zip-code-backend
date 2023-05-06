@@ -61,7 +61,12 @@ def is_valid_postal_code(zipcode: str):
             {"IS_SPACE": True, "OP": "?"},
             {"SHAPE": "XX"}
         ],  # Codigo postal de Bermuda
-
+        "ZIPCODE_BR": [{"SHAPE": "ddddd-ddd"}],  # Brazil
+        "ZIPCODE_IO": [
+            {"SHAPE": "XXdX"},
+            {"IS_SPACE": True, "OP": "?"},
+            {"SHAPE": "XX"}
+        ],  # British Indian Ocean Territory
     }
 
     for name, pattern in patterns.items():
@@ -75,12 +80,13 @@ def is_valid_postal_code(zipcode: str):
 
     country_possible = []
     for match_id, start, end in matches:
+        print(start, end)
         codigo_postal = doc[start:end]
         match_name = nlp.vocab.strings[match_id]
         country_possible.append(match_name)
         print(f"{match_name}: {codigo_postal.text}")
 
-    print(country_possible)
+    print(matches)
 
     if len(matches) == 0:
         return {
