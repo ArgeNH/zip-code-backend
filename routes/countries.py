@@ -3,7 +3,11 @@ countries_dict = {
     (6, 0, 0): [
         "Colombia", "Belarus"
         "China", "Rusia", "Ecuador",
-        "Paraguay", "India", "Kazakhstan"
+        "Paraguay", "India", "Kazakhstan",
+        "Kirguistán", "Romania", "Nigeria",
+        "Singapur", "Panama", "Tajikistan",
+        "Trinidad y Tobago", "Turkmenistan",
+        "Uzbekistan"
     ],
     (4, 0, 0): [
         "Australia", "Afganistan",
@@ -20,9 +24,12 @@ countries_dict = {
         "Macedonia", "Eslovenia", "El Salvador",
         "Etiopia", "Tunez", "Haiti", "Paraguay",
         "Georgia", "Monzambique", "Libano",
-        "Islas Maldivas", "Alemania",
-        "Groenlandia", "Latvia", "Republica de Moldovia",
-
+        "Islas Maldivas", "Alemania", "Groenlandia",
+        "Letonia", "Republica de Moldovia",
+        "Liberia", "Liechtenstein", "Maldivas",
+        "Moldova", "Venezuela", "Niger",
+        "Norfolk Island", "Paraguay",
+        "Svalbard & Jan Mayen Islands", "Zambia"
     ],
     (5, 0, 0): [
         "España", "Aland Islands",
@@ -36,11 +43,23 @@ countries_dict = {
         "Egipto", "Estonia", "Alemania",
         "Guyana Francesa", "Macedonia", "Monaco",
         "Guadalope", "Guam", "Brazil",
-        "Guatemala", "Honduras", "Senegal", "Italia",
+        "Guatemala", "Honduras", "Italia",
         "Suecia", "Indonesia", "Iran", "Iraq",
-        "Jordania", "Kenia"
+        "Jordania", "Kenia", "Kosovo", "Mongolia",
+        "Kuwait", "Serbia", "Laos", "Peru",
+        "Libya", "Lithuania", "Taiwan", "Ciudad del Vaticano",
+        "Maldivas", "Marshall Islands", "Micronesia",
+        "Montenegro", "Myanmar", "Namibia", "Nepal",
+        "Nueva Caledonia", "Nicaragua", "Grecia",
+        "Northern Mariana Islands", "Palau",
+        "Panama", "Puerto Rico", "Reunion",
+        "Saint Barthélemy", "Saint Martin",
+        "Saint Pierre and Miquelon", "San Marino"
+        "Arabia Saudi", "Sudan", "Uruguay",
+        "U.S. Virgin Islands", "Vatican",
+        "Wallis and Futuna"
     ],
-    (5, 0, 1): ["Grecia", "Republica Checa"],
+    (5, 0, 1): ["Grecia", "Republica Checa", "Eslovaquia"],
     (2, 4, 1): ["Reino Unido", "Gibraltar"],
     (3, 4, 1): ["Reino Unido"],
     (2, 1, 0): ["Irlanda"],
@@ -49,7 +68,7 @@ countries_dict = {
         "Azerbaijan", "Islas Virgenes Britanicas",
         "Brunei"
     ],
-    (4, 2, 1): ["Anguila"],
+    (4, 2, 1): ["Anguila", "Holanda"],
     (4, 4, 0): ["Argentina"],
     (4, 1, 0): ["Argentina"],
     (5, 2, 0): ["Barbados"],
@@ -63,12 +82,21 @@ countries_dict = {
         "Islas Feroe", "India", "Mexico",
         "Islandia", "Korea del Sur", "Nigeria",
         "Madagascar", "Papua Nueva Guinea",
-        "Ucrania", "Taiwan", "Japon"
+        "Ucrania", "Taiwan", "Japon", "Lesoto",
+        "Bahrain", "Guinea", "Madagascar", "Oman",
+        "Rusia", "Tajikistan", "Vatican"
     ],
     (2, 0, 0): [
         "Alemania", "Singapur",
         "Turkia"
     ],
     (2, 5, 0): ["Jamaica"],
-    (7, 0, 1): ["Chile", "Japon"],
+    (7, 0, 1): [
+        "Chile", "Japon", "Portugal"
+    ],
+    (1, 6, 1): [
+        "Islas Mavinas", "Saint Helena", "Turks and Caicos Islands"
+    ],
+    (4, 3, 1): ["Malta", "Montserrat"],
+    (3, 1, 0): ["Esuatini", "South Africa"]
 }

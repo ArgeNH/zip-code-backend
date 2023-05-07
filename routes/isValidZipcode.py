@@ -81,11 +81,29 @@ def is_valid_postal_code(zipcode: str):
         "ZIPCODE_FO": [{"SHAPE": "ddd"}],  # Islas Feroe
         "ZIPCODE_GF": [{"SHAPE": "973dd"}],  # Guyana Francesa
         "ZIPCODE_GFP": [{"SHAPE": "987dd"}],  # Polinesia Frances
+        "ZIPCODE_NC": [{"SHAPE": "988dd"}],  # Nueva Caledonia
         "ZIPCODE_GP": [{"SHAPE": "971dd"}],  # Guadalope
         "ZIPCODE_DE": [{"SHAPE": "dd"}],  # Alemania 1
         "ZIPCODE_JM": [{"SHAPE": "XXXXdd"}],  # Jamaica
-        "ZIPCODE_JP": [{"SHAPE": "ddd-dddd"}],  # Jamaica
-
+        "ZIPCODE_JP": [{"SHAPE": "ddd-dddd"}],  # Japon
+        "ZIPCODE_MT": [
+            {"SHAPE": "XXX"},
+            {"IS_SPACE": True, "OP": "?"},
+            {"SHAPE": "dddd"}
+        ],  # Malta
+        "ZIPCODE_NL": [
+            {"SHAPE": "dddd"},
+            {"IS_SPACE": True, "OP": "?"},
+            {"SHAPE": "XX"}
+        ],  # Holanda
+        "ZIPCODE_PT": [
+            {"SHAPE": "dddd"},
+            {"IS_SPACE": True, "OP": "?"},
+            {"SHAPE": "ddd"}
+        ],  # Holanda
+        # Saint Vincent and the Grenadines
+        "ZIPCODE_VC": [{"SHAPE": "XXdddd"}],
+        "ZIPCODE_SZ": [{"SHAPE": "Xddd"}],
     }
 
     for name, pattern in patterns.items():

@@ -244,7 +244,10 @@ codes = {
     'ZM': 'Zambia',
     'ZR': 'Zaire',
     'ZW': 'Zimbabwe',
+    'RS': 'Serbia',
     'ZZ': 'Unknown or unspecified country',
+    'ME': 'Montenegro',
+    'BL': 'Saint Barthélemy'
 }
 
 
