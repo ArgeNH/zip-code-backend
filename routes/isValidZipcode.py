@@ -11,7 +11,6 @@ def is_valid_postal_code(zipcode: str):
     matcher = Matcher(nlp.vocab)
 
     digit, letter, alpha = contar_caracteres(zipcode)
-    print("Tiene {} digitos, {} letras y {} caracteres.".format(digit, letter, alpha))
 
     for name, pattern in patterns.items():
         matcher.add(name, [pattern])
@@ -24,13 +23,9 @@ def is_valid_postal_code(zipcode: str):
 
     country_possible = []
     for match_id, start, end in matches:
-        print(start, end)
         codigo_postal = doc[start:end]
         match_name = nlp.vocab.strings[match_id]
         country_possible.append(match_name)
-        print(f"{match_name}: {codigo_postal.text}")
-
-    print(matches)
 
     if len(matches) == 0:
         return {
@@ -92,14 +87,12 @@ def verificar_codigo_postal(texto, patterns):
 
 
 def contar_caracteres(texto):
-    letras = 0
-    digitos = 0
-    caracteres = 0
+    letters, digits, alpha = 0, 0, 0
     for caracter in texto:
         if caracter.isalpha():
-            letras += 1
+            letters += 1
         elif caracter.isdigit():
-            digitos += 1
+            digits += 1
         else:
-            caracteres += 1
-    return digitos, letras, caracteres
+            alpha += 1
+    return digits, letters, alpha

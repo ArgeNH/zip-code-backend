@@ -1,11 +1,9 @@
 from routes import zipcodes
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
-from fastapi.encoders import jsonable_encoder
 
 from config import db
-
+# from routes import retrieveData
 
 # create FastAPI instance
 app = FastAPI()
@@ -34,6 +32,7 @@ app.include_router(zipcodes.router)
 @app.on_event("startup")
 def startup_db_client():
     try:
+        # retrieveData.loadExcelData()
         db.conn.admin.command('ping')
         print("Pinged your deployment. You successfully connected to MongoDB!")
     except Exception as e:

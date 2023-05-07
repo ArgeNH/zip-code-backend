@@ -4,3 +4,4 @@ pymongo
 spacy
 python-dotenv
 requests
+openpyxl
