@@ -10,7 +10,7 @@ locations = []
 
 def loadExcelData():
     df = read_excel(
-        "/Users/argenino/Downloads/geonames-postal-code@public.xlsx")
+        "/Users/xxxxx/Downloads/geonames-postal-code@public.xlsx")
 
     df = df.fillna("")
 
@@ -31,7 +31,5 @@ def loadExcelData():
             "province_code": row["admin code2"]
         }
         locations.append(location)
-        print(
-            f"Inserting to array {location['postal_code']} [{index} of {len(df)}]")
 
     dbZip.locations.insert_many(locations, ordered=False)

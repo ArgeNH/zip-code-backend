@@ -17,8 +17,6 @@ def is_valid_postal_code(zipcode: str):
 
     doc = nlp(zipcode)
 
-    # verificar_codigo_postal(zipcode, patterns)
-
     matches = matcher(doc)
 
     country_possible = []
@@ -53,37 +51,17 @@ def is_valid_postal_code(zipcode: str):
     }
 
 
-def verificar_codigo_postal(texto, patterns):
-    doc = nlp(texto)
-    for pattern_name, pattern in patterns.items():
-        for i, token in enumerate(doc):
-            token_match = True
-            for j, cond in enumerate(pattern):
-                if i + j < len(doc):
-                    token_to_check = doc[i + j]
-                    if "SHAPE" in cond and token_to_check.shape_ != cond["SHAPE"]:
-                        token_match = False
-                        break
-                    if "ORTH" in cond and token_to_check.text != cond["ORTH"]:
-                        token_match = False
-                        break
-                    if "IS_SPACE" in cond and token_to_check.is_space != cond["IS_SPACE"]:
-                        token_match = False
-                        break
-                else:
-                    token_match = False
-                    break
+def verificar_codigo_postal(zipcode, data):
+    matching_countries = []
 
-            if token_match:
-                print(f"El texto coincide con el patrón: {pattern_name}")
-                return True
+    for entry in data:
+        country = entry["Country"]
+        regex = entry["Regex"]
 
-        if not token_match:
-            print(
-                f"Fallo en la comprobación del patrón {pattern_name} en el token {i + j}: {doc[i + j].text} (condición: {cond})")
+        if re.match(regex, zipcode):
+            matching_countries.append(country)
 
-    print("No se encontró ningún patrón coincidente.")
-    return False
+    return matching_countries
 
 
 def contar_caracteres(texto):

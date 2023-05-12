@@ -8,8 +8,8 @@ import csv
 from config import db
 from codes import get_country_name
 
-from .isValidZipcode import is_valid_postal_code
-
+from .isValidZipcode import is_valid_postal_code, verificar_codigo_postal
+from .countries import dataCountries
 
 dbZip = db.dbZip
 
@@ -39,6 +39,8 @@ async def read_zipcode(zipcode: str = Path(..., min_length=1), request: Request 
             zipcode: [],
             "code": code
         }
+
+    sintantic = verificar_codigo_postal(zipcode, dataCountries)
 
     try:
         location_array = list(dbZip.locations.find({"postal_code": zipcode}))
@@ -103,7 +105,6 @@ async def read_zipcode(zipcode: str = Path(..., min_length=1), request: Request 
             "code": code
         }
     except TypeError as e:
-        print(e.args)
         return {
             "message": f"Error {e.args}",
             "status": 500,
@@ -213,7 +214,6 @@ async def upload_file(file: UploadFile = File(...)):
             "filename": file.filename
         }
     except TypeError as e:
-        print(e.args)
         return {
             "message": f"Error: {e.args}",
             "status": 500,
